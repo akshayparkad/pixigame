@@ -155,7 +155,6 @@ let heart = new Sprite(resources["images/heart.webp"].texture);
 
   state = play;
  
-  //Start the game loop 
   app.ticker.add(delta => gameLoop(delta));
 
   count = 0;

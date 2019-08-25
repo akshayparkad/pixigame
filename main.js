@@ -25,7 +25,7 @@ let Application = PIXI.Application,
   .add("images/back.webp")
   .load(setup);
 
-let player, tree, message, state, trees, hearts, heart, back, count;
+let player, tree, message, state, trees, hearts, heart, back, counter, heartHit;
 
 app.stage.interactive = true;
 
@@ -157,9 +157,10 @@ let heart = new Sprite(resources["images/heart.webp"].texture);
  
   app.ticker.add(delta => gameLoop(delta));
 
-  count = 0;
 
 }
+
+counter = 0;
 
 //========================================================================================
 
@@ -194,15 +195,25 @@ trees.forEach(function(tree) {
 
   hearts.forEach(function(heart) {
   heart.x += heart.vx;
+  heartHit = false;
 
   if(hitR(player, heart)) {
-      count ++;
-      heart.visible = false;
-      message1.text = "Score: " + count + " / 300"
-    }
-  })
+  	heartHit = true;
+ }
 
-  if(count == 300){
+  let remove;
+ 	if (heartHit){
+      remove = game.removeChild(heart);
+      if(remove){
+        counter ++;
+      }
+      message1.text = "Score: " + counter + " / 25"
+ 	}
+ 
+  });
+
+
+  if(counter == 25){
     state = end;
     message.text = "You Win";
   }
